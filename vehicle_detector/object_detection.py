@@ -10,7 +10,7 @@ class Detector():
         self.video = video
 
     def load_model(self):
-        model = torch.load('../1st/best.pt')
+        model = torch.load('./models/best.pt')
 
         return model
     
