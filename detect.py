@@ -156,6 +156,7 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
+                # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
@@ -170,7 +171,7 @@ def run(
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
-
+                # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
             # Stream results
             im0 = annotator.result()
             if view_img:
