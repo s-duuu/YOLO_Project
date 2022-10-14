@@ -158,12 +158,14 @@ def run(
 
                 # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
                 # Write results
+                # Lists of x,y,w,h
                 x_centroids = []
                 y_centroids = []
                 widths = []
                 heights = []
                 for *xyxy, conf, cls in reversed(det):
-                    xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
+                    # Add to x,y,w,h lists and print
+                    xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4))).view(-1).tolist()
                     x_centroids.append(xywh[0])
                     y_centroids.append(xywh[1])
                     widths.append(xywh[2])
