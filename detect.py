@@ -29,6 +29,7 @@ import argparse
 import os
 import platform
 import sys
+import math
 from pathlib import Path
 
 import torch
@@ -163,6 +164,7 @@ def run(
                 y_centroids = []
                 widths = []
                 heights = []
+                distances = []
                 for *xyxy, conf, cls in reversed(det):
                     # Add to x,y,w,h lists and print
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4))).view(-1).tolist()
@@ -170,10 +172,11 @@ def run(
                     y_centroids.append(xywh[1])
                     widths.append(xywh[2])
                     heights.append(xywh[3])
-                    print("x centroids : ", xywh[0])
-                    print("y_centroids : ", xywh[1])
-                    print("widths : ", xywh[2])
-                    print("heights : ", xywh[3])
+
+                    # Calculate distance using width
+                    distance = 1.825*1080/(2*xywh[2]*math.tan(math.pi*40/180))
+                    distances.append(distance)
+
                     if save_txt:  # Write to file
                         # xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
@@ -187,6 +190,9 @@ def run(
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
                 # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
+                print("widths : ", widths)
+                print("heights : ", heights)
+                print("distances : ", distances)
             # Stream results
             im0 = annotator.result()
             if view_img:
