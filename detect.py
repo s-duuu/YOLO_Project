@@ -158,9 +158,22 @@ def run(
 
                 # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
                 # Write results
+                x_centroids = []
+                y_centroids = []
+                widths = []
+                heights = []
                 for *xyxy, conf, cls in reversed(det):
+                    xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()
+                    x_centroids.append(xywh[0])
+                    y_centroids.append(xywh[1])
+                    widths.append(xywh[2])
+                    heights.append(xywh[3])
+                    print("x centroids : ", xywh[0])
+                    print("y_centroids : ", xywh[1])
+                    print("widths : ", xywh[2])
+                    print("heights : ", xywh[3])
                     if save_txt:  # Write to file
-                        xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
+                        # xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(f'{txt_path}.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
