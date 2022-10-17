@@ -40,11 +40,11 @@ if cap.isOpened():
                 ymax_list.append(results.pandas().xyxy[0]['ymax'][iter])
                 confidence_list.append(results.pandas().xyxy[0]['confidence'][iter])
 
-                # print("xmin : ", results.pandas().xyxy[0]['xmin'][iter])
-                # print("ymin : ", results.pandas().xyxy[0]['ymin'][iter])
-                # print("xmax : ", results.pandas().xyxy[0]['xmax'][iter])
-                # print("ymax : ", results.pandas().xyxy[0]['ymax'][iter])
-                # print("confidence : ", results.pandas().xyxy[0]['confidence'][iter])
+                print("xmin : ", results.pandas().xyxy[0]['xmin'][iter])
+                print("ymin : ", results.pandas().xyxy[0]['ymin'][iter])
+                print("xmax : ", results.pandas().xyxy[0]['xmax'][iter])
+                print("ymax : ", results.pandas().xyxy[0]['ymax'][iter])
+                print("confidence : ", results.pandas().xyxy[0]['confidence'][iter])
 
                 width_list.append(abs(int(xmax_list[iter]) - int(xmin_list[iter])))
                 height_list.append(abs(int(ymax_list[iter]) - int(ymin_list[iter])))
@@ -53,15 +53,15 @@ if cap.isOpened():
                 # Check
                 # print(type(confidence_list[iter]))
 
-                cv2.putText(img, str(confidence_list[iter]), (int(xmin_list[iter]), int(ymin_list[iter])), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3)
-                cv2.rectangle(img, (int(xmin_list[iter]), int(ymin_list[iter])), (int(xmax_list[iter]), int(ymax_list[iter])), (0, 0, 255), 3)                
+                # cv2.putText(img, str(confidence_list[iter]), (int(xmin_list[iter]), int(ymin_list[iter])), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 3)
+                # cv2.rectangle(img, (int(xmin_list[iter]), int(ymin_list[iter])), (int(xmax_list[iter]), int(ymax_list[iter])), (0, 0, 255), 3)                
 
             # imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             
             # plt.imshow(imgRGB)
             # plt.show()
 
-            cv2.imshow('Result', img)
+            # cv2.imshow('Result', img)
         
         else:
             break
