@@ -6,6 +6,7 @@ import os
 model_path = './vehicle_detector/best.pt'
 model = torch.hub.load(os.getcwd(), 'custom', source='local', path = model_path, force_reload=True)
 video = './video/test2_Trim.mp4'
+print(torch.cuda.is_available())
 
 cap = cv2.VideoCapture(video)
 if cap.isOpened():
@@ -61,7 +62,7 @@ if cap.isOpened():
             # plt.imshow(imgRGB)
             # plt.show()
 
-            # cv2.imshow('Result', img)
+            cv2.imshow('Result', img)
         
         else:
             break
