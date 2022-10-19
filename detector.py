@@ -50,11 +50,16 @@ if cap.isOpened():
                 # print("ymax : ", ymax)
                 # print("confidence : ", confidence)
 
+                width = abs(xmax - xmin)
+                height = abs(ymax - ymin)
                 # width_list.append(abs(int(xmax) - int(xmin)))
                 # height_list.append(abs(int(ymax) - int(ymin)))
                 # centroid_list.append(((int(xmin) + int(xmax))/2, (int(ymin) + int(ymax))/2))
 
-                cv2.putText(img, str(confidence), (int(xmin), int(ymin)), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 5)
+                # cv2.putText(img, str(confidence), (int(xmin), int(ymin)), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 5)
+                # width, height print
+                cv2.putText(img, str(width), (int(xmin), int(ymin)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 5)
+                cv2.putText(img, str(height), (int(xmin), int(ymax)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 5)
                 cv2.rectangle(img, (int(xmin), int(ymin)), (int(xmax), int(ymax)), (0, 0, 255), 5)                
 
             # imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

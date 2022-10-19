@@ -172,6 +172,7 @@ def run(
                     y_centroids.append(xywh[1])
                     widths.append(xywh[2])
                     heights.append(xywh[3])
+                    
 
                     # Calculate distance using width
                     distance = 1.825*1080/(2*xywh[2]*math.tan(math.pi*40/180))
@@ -186,23 +187,28 @@ def run(
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        annotator.box_label(xyxy, label, color=colors(c, True))
+                        
+                        # annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
+                    
+                    # cv2.putText(im0, str(xywh[2]), (int(xywh[0]), int(xywh[1]+xywh[3])), cv2.FONT_ITALIC, 1, (255,0,0), 3)
                 # ------------------------------------ Coordinate of bbox, accuracy, class ------------------------------------
-                print("widths : ", widths)
-                print("heights : ", heights)
-                print("distances : ", distances)
+                if len(widths) != 0:
+                    max_index = widths.index(max(widths))
+                    left_top = (int((x_centroids[max_index]) - 0.5*(widths[max_index])), int((y_centroids[max_index]) - 0.5*(heights[max_index])))
+                    right_bottom = (int((x_centroids[max_index]) + 0.5*(widths[max_index])), int((y_centroids[max_index]) + 0.5*(heights[max_index])))
+                    print("------------type : ", type(left_top))
+                    cv2.rectangle(im0, left_top, right_bottom, (255,0,0), 5)
+
 
             # Stream results
             im0 = annotator.result()
-            if view_img:
-                if platform.system() == 'Linux' and p not in windows:
-                    windows.append(p)
-                    cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
-                    cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
-                cv2.imshow(str(p), im0)
-                cv2.waitKey(1)  # 1 millisecond
+            windows.append(p)
+            cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
+            cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
+            cv2.imshow(str(p), im0)
+            cv2.waitKey(1)  # 1 millisecond
 
             # Save results (image with detections)
             if save_img:
