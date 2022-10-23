@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import rospy
 import cv2
@@ -12,7 +12,7 @@ import sys
 from rostopic import get_topic_type
 
 from sensor_msgs.msg import Image, CompressedImage
-from msg import BoundingBox, BoundingBoxes
+from yolo_codeep.msg import BoundingBox, BoundingBoxes
 
 
 # add yolov5 submodule to path
